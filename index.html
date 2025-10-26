@@ -147,9 +147,12 @@
 <body>
     <header>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1>Blogs</h1>
-                <p class="subtitle">by hlsxx</p>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img id="github-avatar" src="" alt="Profile" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #eb34a8;">
+                <div>
+                    <h1>Blogs</h1>
+                    <p class="subtitle">by hlsxx</p>
+                </div>
             </div>
             <a href="https://github.com/hlsxx" target="_blank" style="color: #333; text-decoration: none; font-size: 1.5rem;">
                 <svg width="32" height="32" viewBox="0 0 16 16" fill="currentColor">
@@ -158,7 +161,6 @@
             </a>
         </div>
     </header>
-
     <div id="index-view">
         <h2>All Posts</h2>
         <ul class="blog-list" id="blog-list">
@@ -172,6 +174,19 @@
     </div>
 
     <script>
+        async function loadGitHubAvatar() {
+            try {
+                const response = await fetch('https://api.github.com/users/hlsxx');
+                const data = await response.json();
+                document.getElementById('github-avatar').src = data.avatar_url;
+            } catch (error) {
+                console.error('Error loading GitHub avatar:', error);
+                document.getElementById('github-avatar').style.display = 'none';
+            }
+        }
+
+        loadGitHubAvatar();
+
         let blogs = [];
 
         marked.setOptions({
@@ -180,7 +195,7 @@
         });
 
         const blogFiles = [
-          { title: 'PHP sucks?', filename: '001_php_lover_php_hater.md'},
+          { title: 'Touch typing Verstappen', filename: '001_touch_typing.md'},
         ];
 
         async function loadBlogs() {
